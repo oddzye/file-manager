@@ -4,3 +4,5 @@ const parsedArgs = parseArgs(process.argv.slice(2));
 const userNameArg = parsedArgs.find(({ key }) => key === 'username');
 
 console.log(`Welcome to the File Manager, ${ userNameArg?.value }!`);
+
+console.log(`Thank you for using File Manager, ${ userNameArg?.value }, goodbye!`);
