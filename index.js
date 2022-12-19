@@ -1,9 +1,10 @@
 import { parseArgs } from './cli/parseArgs.js';
 import readlinePromises from 'readline/promises';
-import path from 'path';
 import { homedir } from 'node:os';
 import { changeDir } from './cli/changeDir.js';
 import { listFiles } from './cli/listFiles.js';
+import { readFile } from './cli/readFile.js';
+import path from 'node:path';
 
 const parsedArgs = parseArgs(process.argv.slice(2));
 const userNameArg = parsedArgs.find(({ key }) => key === 'username');
@@ -28,6 +29,9 @@ readline.on('line', async (line) => {
     } else if (command === 'ls') {
         const list = await listFiles(process.cwd());
         console.table(list);
+    } else if (command === 'cat') {
+        const content = await readFile(arg);
+        console.log(content);
     } else if (command === '.exit') {
         readline.close();
         return;
