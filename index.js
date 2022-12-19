@@ -3,6 +3,7 @@ import readlinePromises from 'readline/promises';
 import path from 'path';
 import { homedir } from 'node:os';
 import { changeDir } from './cli/changeDir.js';
+import { listFiles } from './cli/listFiles.js';
 
 const parsedArgs = parseArgs(process.argv.slice(2));
 const userNameArg = parsedArgs.find(({ key }) => key === 'username');
@@ -17,13 +18,16 @@ const readline = readlinePromises.createInterface({
     output: process.stdout,
 });
 
-readline.on('line', (line) => {
+readline.on('line', async (line) => {
     const [command, arg] = line.split(' ');
 
     if (command === 'up') {
         changeDir('..');
     } else if (command === 'cd') {
         changeDir(arg);
+    } else if (command === 'ls') {
+        const list = await listFiles(process.cwd());
+        console.table(list);
     } else if (command === '.exit') {
         readline.close();
         return;
