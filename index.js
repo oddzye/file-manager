@@ -7,6 +7,7 @@ import { readFile } from './cli/readFile.js';
 import { APP_MESSAGES } from './cli/messages.js';
 import { addFile } from './cli/addFile.js';
 import { renameFile } from './cli/renameFile.js';
+import { copyFile } from './cli/copyFile.js';
 
 const parsedArgs = parseArgs(process.argv.slice(2));
 const userNameArg = parsedArgs.find(({ key }) => key === 'username');
@@ -44,6 +45,9 @@ readline.on('line', async (line) => {
             break;
         case 'rn':
             renameFile(args[0], args[1]);
+            break;
+        case 'cp':
+            copyFile(args[0], args[1]);
             break;
         case '.exit':
             readline.close();
